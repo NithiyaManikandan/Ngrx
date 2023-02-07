@@ -1,0 +1,50 @@
+<div>
+  <button [routerLink]="['../addUser']" *ngIf="updatebutton">Add user</button>&nbsp;
+</div>
+
+<div>
+  <div>
+    <h3>post list</h3>
+  </div>
+  <div>
+    <table>
+      <tr>
+        <th>Email</th>&nbsp;&nbsp;&nbsp;
+        <th>Password</th>&nbsp;&nbsp;&nbsp;
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let post of posts | async">
+        <td>{{post.email}}</td>&nbsp;&nbsp;&nbsp;
+        <td>{{post.password}}</td>&nbsp;&nbsp;&nbsp;
+        <td>
+          <button [routerLink]="['/post',post._id]">Update </button>&nbsp;
+          <button (click)="onDelete(post._id)"> Delete </button>&nbsp;
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf=" updatebutton ||  !updatebutton">
+    <div class="userForm">
+      <div>
+        <h3 *ngIf="!updatebutton">Add user</h3>
+        <h3 *ngIf="updatebutton">Update user</h3>
+      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="submit()">
+        <div>
+          <label for="">Email</label>
+          <input type="text" placeholder="Enter your email" formControlName="email">
+        </div>
+        <div>
+          <label>Password</label>
+          <input type="password" placeholder="Enter the password" formControlName="password">
+        </div>
+        <div>
+          <button [disabled]="loginForm.invalid" *ngIf="!updatebutton">Submit</button>
+        </div>
+        <div>
+          <button [disabled]="loginForm.invalid" *ngIf="updatebutton">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
